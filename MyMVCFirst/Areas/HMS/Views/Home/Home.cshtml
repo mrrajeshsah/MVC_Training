@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewBag.Title = "Home";
+}
+ 
+<div class="card">
+
+    <div class="card-header">
+        <h5>Sign Up Form</h5>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-4">
+                <span>Name</span>
+                <input type="text" class="form-control" id="name" />
+            </div>
+            <div class="col-md-4">
+                <span>Mobile</span>
+                <input type="text" class="form-control" id="mobile" />
+            </div>
+            <div class="col-md-4">
+                <span>Address</span>
+                <input type="text" class="form-control" id="address" />
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <button id="btn-submit" class="btn btn-primary" >Submit</button>
+    </div>  
+</div>
+
+<script>
+    $('#btn-submit').on('click', function () {
+
+        if ($('#name').val() === "") {
+            // alertError("Please Enter Name.");
+            alertErrorNotification("Please Enter Name.")
+            return false;
+        }
+        if ($('#mobile').val() === "") {
+            alertErrorNotification("Please Enter Mobile No.");
+            return false;
+        }
+        if ($('#mobile').val().length!=10) {
+            alertErrorNotification("Please Enter valid Mobile No.");
+            return false;
+        }
+        var data = {};
+        data.name = $('#name').val();
+        data.mobile = $('#mobile').val();
+        data.address = $('#address').val();
+
+       // var data = { name: $('#name').val(), mobile: $('#mobile').val(), address : $('#address').val()};
+
+        gowithData('../../../hms/home/getdata?methodId=test', 'POST', JSON.stringify({ data: data }), function (resp) {
+            if (resp.error) {
+                alertError(resp.message)
+            }
+            else {
+                alertSuccess(resp.message)
+                //bind_data(resp.data)
+                //bind_data(resp.data_1)
+                //bind_data(resp.data_2)
+            }
+
+        }, true)
+    })
+</script>
+
+

@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html> 
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>_LayoutHome</title>
+</head>
+<body>
+    <div> 
+        <select id="ddl_Gender"> 
+        </select>
+        <table id="mytable" class="table">
+            <thead>
+                <tr>
+                    <th>Action</th>
+                    <th>Name</th>
+                    <th>Class</th>
+                    <th>Section</th>
+                    <th>Roll No</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+</body>
+
+<script>
+
+   //function declration
+    var Id = "";
+   // var data = [{Name="RAjesh",Class = "X",Section="A"}, {...}, {...}]
+    function load_data(data) {
+       // data should be in json array
+        $('#mytable tbody').empty();
+        var tbody = $('#mytable tbody');
+        $.each(data, function (index, obj) {
+            var tr = $('<tr>');
+            var td = $('<td>');
+            var btn_edit = $('<button>').text('Edit').addClass("btn btn-primary");
+            var btn_delete = $('<button>').text('Delete').addClass("btn btn-danger");
+            td.append(btn_edit, btn_delete);
+            tr.append(td,
+                $('<td>').text(obj.Name),
+                $('<td>').text(obj.Class),
+                $('<td>').text(obj.Section),
+                $('<td>').text(obj.Roll_Name),
+            )
+            tbody.append(tr)
+            btn_edit.on('Click', function () {
+                $("#ttxt_Name").val(obj.Name);
+                $("#ttxt_Class").val(obj.Class);
+                Id = obj.Id;
+            })
+            btn_delete.on('click', function () {
+                Id = obj.Id;
+                //api call for delete
+            })
+        })
+    }
+
+
+
+
+
+   // variable declration
+    var xyz;
+    let sss = 123; 
+
+    // ==, >=,<=, < , >,=== 
+    // or -->  ||
+    // and --> &&
+    //a==A ture
+    // a===A false
+    var name = 'Rajesh'
+    var employee = "rajesh"
+    if (name === employee) {
+        // false
+    }
+    if ("123" === 123) {
+        // false
+    }
+
+    if ("123" == 123) {
+        // true
+    }
+
+    var abc = "zssd"
+
+    if (abc) {
+        console.log(abc);
+    }
+
+    var list = [1, 2, 3, 4, 5, 6, a, w, v, dfgd,];
+
+    $.each(list, function (index, data) {
+        console.log(data);
+    })
+
+    $(function () {
+
+
+    });
+
+    $(function () {
+
+
+    })
+    // value set
+    // form type field
+    // input,drodown, 
+    var name = $('#txt_name').val(); //get
+    $('#txt_name').val(name);//set
+
+    //none filed
+    //text,html
+    <span></span>
+    <p></p>
+    <h1></h1>
+    $('#name').text("<b>raj</b>");//<b>raj</b>
+    $('#name').html("<b>raj</b>");//raj
+
+    $('$ddl_Gender').append('<option value="male">Male</option>');
+    var op = $('<option>').val("male").text("Male");
+    var f_o = $('<option>').val("female").text("Female");
+    $('$ddl_Gender').append(op);
+    $('$ddl_Gender').append(f_o);
+    $('$ddl_Gender').append(op, f_o);
+    $('$ddl_Gender').append($('<option>').val("male").text("Male"), $('<option>').val("female").text("Female"));
+
+    //
+
+
+</script>
+</html>
