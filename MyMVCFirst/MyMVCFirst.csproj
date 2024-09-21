@@ -339,6 +339,7 @@
     <Content Include="Content\theme\plugins\highcharts\js\variable-pie.js.map" />
     <Content Include="Content\theme\plugins\metismenu\css\metisMenu.min.css.map" />
     <Content Include="Content\theme\plugins\metismenu\js\metisMenu.min.js.map" />
+    <Content Include="Areas\HMS\Views\Home\FormUsingEditor.cshtml" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

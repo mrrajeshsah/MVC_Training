@@ -19,8 +19,19 @@
                 <input type="text" class="form-control" id="mobile" />
             </div>
             <div class="col-md-4">
+                <span>Age</span>
+                <select class="form-select" id="age">
+                    <option value="">Select</option>
+                </select>
+            </div>
+
+            <div class="col-md-4">
                 <span>Address</span>
                 <input type="text" class="form-control" id="address" />
+            </div> 
+            <div class="col-md-4">
+                <span>Accept Term &amp; Condition</span>
+                <input type="checkbox" id="chk_term" />
             </div>
         </div>
     </div>
@@ -30,6 +41,20 @@
 </div>
 
 <script>
+    $(function (){
+
+        $('#age').append($("<option>").text("23").val("23")); 
+        $('#age').append($("<option>").text("24").val("24"));
+        $('#age').append($("<option>").text("25").val("25"));
+        $('#age').append($("<option>").text("26").val("26"));
+        $('#age').append($("<option>").text("27").val("27"));
+    })
+    function empty() {
+        $('#name').val('');
+        $('#mobile').val('');
+        $('#age').val('');
+        $('#address').val('');
+    }
     $('#btn-submit').on('click', function () {
 
         if ($('#name').val() === "") {
@@ -49,6 +74,8 @@
         data.name = $('#name').val();
         data.mobile = $('#mobile').val();
         data.address = $('#address').val();
+        data.age = $('#age').val();
+        data.accept_term = $('#chk_term').prop('checked');
 
        // var data = { name: $('#name').val(), mobile: $('#mobile').val(), address : $('#address').val()};
 
@@ -58,6 +85,8 @@
             }
             else {
                 alertSuccess(resp.message)
+
+                empty();
                 //bind_data(resp.data)
                 //bind_data(resp.data_1)
                 //bind_data(resp.data_2)

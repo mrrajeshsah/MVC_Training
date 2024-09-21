@@ -1,0 +1,122 @@
+﻿
+@{
+    ViewBag.Title = "Form Using Editor";
+}
+
+<div class="row">
+    <div class="col-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="row ">
+                    @Html.LabelEditor("Student_Name", "text", "Name of Student", isRequired: true, editorHtmlAttributes: new { placeholder = "Student Name" })
+                    @Html.LabelEditor("Address", "multiline", isRequired: true, editorHtmlAttributes: new { placeholder = "Address" })
+                    @Html.LabelEditor("Gender", "ddl", isRequired: true, ddl_comma_seperated: "Male,Female,Other", ddl_optionlabel: "Select Gender")
+                    
+                </div>
+            </div>
+            <div class="card-footer">
+                <button id="btn-add" class="btn btn-primary">Add</button>
+                <button id="btn-update" class="btn btn-primary d-none">Update</button>
+                <button id="btn-cancel" class="btn btn-secondary d-none">Cancel</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-8">
+       <table id="tbl" class="table table-striped">
+           <thead>
+               <tr>
+                   <th>Name</th>
+                   <th>Address</th>
+                   <th>Gender</th>
+               </tr>
+           </thead>
+           <tbody>
+
+           </tbody>
+       </table>
+    </div>
+    <script>
+        $(function () {
+            var data = {};
+           
+            gowithData('../../../hms/home/getdata?methodId=test2', 'POST', JSON.stringify({ data: data }), function (resp) {
+                
+                    bind_data(resp.data); 
+            }, true)
+        })
+        $('#btn-cancel').on('click', function () {
+            $('#Student_Name').val('');
+            $('#Address').val('');
+            $('#Gender').val('');
+            $('#btn-add').removeClass("d-none");
+            $('#btn-update').addClass("d-none");
+            $('#btn-cancel').addClass("d-none");
+        })
+        $('#btn-add').on('click', function () {
+            var data = {};
+            data.Student_Name = $('#Student_Name').val();
+            data.Address = $('#Address').val();
+            data.Gender = $('#Gender').val();
+            gowithData('../../../hms/home/getdata?methodId=test', 'POST', JSON.stringify({ data: data }), function (resp) {
+                if (resp.error) {
+                    alertError(resp.message)
+                }
+                else {
+                    alertSuccess(resp.message)
+                    bind_data(resp.data);
+                }
+                $('#Student_Name').val('');
+                $('#Address').val('');
+                $('#Gender').val('');
+            }, true)
+        });
+        var id = "";
+        $('#btn-update').on('click', function () {
+            var data = {};
+            data.Student_Name = $('#Student_Name').val();
+            data.Address = $('#Address').val();
+            data.Gender = $('#Gender').val();
+            data.Id = id;
+            gowithData('../../../hms/home/getdata?methodId=update', 'POST', JSON.stringify({ data: data }), function (resp) {
+                if (resp.error) {
+                    alertError(resp.message)
+                }
+                else {
+                    alertSuccess(resp.message)
+                    bind_data(resp.data);
+                }
+                $('#Student_Name').val('');
+                $('#Address').val('');
+                $('#Gender').val('');
+                $('#btn-add').removeClass("d-none");
+                $('#btn-update').addClass("d-none");
+                $('#btn-cancel').addClass("d-none");
+            }, true)
+        });
+
+        function bind_data(data) {
+            var tbody = $('#tbl tbody');
+            tbody.empty();
+            $.each(data, function (i, d) {
+                var btn_edit = $('<button>').text("Edit").addClass("btn btn-sm btn-warning");
+                var tr = $('<tr>');
+                tr.append(btn_edit),
+                tr.append($('<td>').text(d.Student_Name));
+                tr.append($('<td>').text(d.Address));
+                tr.append($('<td>').text(d.Gender));
+                tbody.append(tr)
+                btn_edit.on('click', function () {
+
+                    $('#Student_Name').val(d.Student_Name);
+                    $('#Address').val(d.Address);
+                    $('#Gender').val(d.Gender);
+                    id = d.Id;
+                    $('#btn-add').addClass("d-none");
+                    $('#btn-update').removeClass("d-none");
+                    $('#btn-cancel').removeClass("d-none");
+                })
+            });
+        }
+    </script>
+</div>
+

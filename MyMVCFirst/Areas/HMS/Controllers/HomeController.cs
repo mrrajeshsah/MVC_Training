@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyMVCFirst;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -22,20 +23,29 @@ namespace MyMVCFirst.Areas.HMS.Controllers
         {
              if(methodId=="test")
             {
-                if(data["mobile"].ToString().Length!=10)
-                {
-                    return Response.Error("Please Enter Valid Mobile No.");
-                }
-                var dt = new DataTable();
-                System.Threading.Thread.Sleep(3000);
-                //data save or retrive from database 
-                return Response.Success("Data Saved Successfully", dt);
+                MyMVC.Insert("Student_Details", data);
+
+                return Response.Success("Data Saved Successfully", MyMVC.dataTable("select * from Student_Details"));
+            } 
+            if(methodId=="update")
+            {
+                MyMVC.Update("Student_Details", data,$"id='{data["Id"]}'");
+
+                return Response.Success("Data Saved Successfully", MyMVC.dataTable("select * from Student_Details"));
+            }
+             if(methodId== "test2")
+            { 
+                return Response.Success("Data Saved Successfully", MyMVC.dataTable("select * from Student_Details"));
             }
 
             return Response.Error("Invalid Method");
         }
       //  [Route("about")]
         public ActionResult AboutUs()
+        {
+            return View();
+        }
+        public ActionResult FormUsingEditor()
         {
             return View();
         }
