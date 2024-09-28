@@ -8,23 +8,22 @@ using System.Web.Mvc;
 
 namespace MyMVCFirst.Areas.HMS.Controllers
 {
-   // [RouteArea("hms")]
+    [RouteArea("hms")]
     public class HomeController : Controller
     {
         // GET: HMS/Home
+        [Route("")]
         public ActionResult Home()
         {
             ViewBag.Name = "Rajesh";
             return View();
-        } 
-
-
+        }  
         public ActionResult getData(String methodId,Dictionary<string,object> data)
         {
              if(methodId=="test")
             {
                 MyMVC.Insert("Student_Details", data);
-
+                
                 return Response.Success("Data Saved Successfully", MyMVC.dataTable("select * from Student_Details"));
             } 
             if(methodId=="update")
@@ -40,11 +39,14 @@ namespace MyMVCFirst.Areas.HMS.Controllers
 
             return Response.Error("Invalid Method");
         }
-      //  [Route("about")]
+        //  [Route("about")]
+        [Route("about")]
         public ActionResult AboutUs()
         {
             return View();
         }
+
+        [Route("student")]
         public ActionResult FormUsingEditor()
         {
             return View();
